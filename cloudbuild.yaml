@@ -1,0 +1,24 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/sharing-session-421916/sharing-session-ar/model:$COMMIT_SHA', '.']
+  - name: gcr.io/cloud-builders/docker
+    args: ['push', 'us-central1-docker.pkg.dev/sharing-session-421916/sharing-session-ar/model:$COMMIT_SHA']
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - 'api-model'
+      - '--image'
+      - 'us-central1-docker.pkg.dev/sharing-session-421916/sharing-session-ar/model:$COMMIT_SHA'
+      - '--region'
+      - 'us-central1'
+      - '--cpu'
+      - '2'
+      - '--memory'
+      - '2048Mi'
+      - '--allow-unauthenticated'
+      - '--set-secrets=BUCKET_NAME=bucket_name:latest'
+images:
+  - 'us-central1-docker.pkg.dev/sharing-session-421916/sharing-session-ar/model:$COMMIT_SHA'
+logsBucket: 'gs://sharing-session-bucket/logs'
