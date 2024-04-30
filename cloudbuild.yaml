@@ -1,8 +1,8 @@
 steps:
   - name: gcr.io/cloud-builders/docker
-    args: ['build', '-t', 'asia-southeast2-docker.pkg.dev/sharing-session-421916/sharing-session-ar/model:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/sharing-session-421916/sharing-session-ar/model:$COMMIT_SHA', '.']
   - name: gcr.io/cloud-builders/docker
-    args: ['push', 'asia-southeast2-docker.pkg.dev/sharing-session-421916/sharing-session-ar/model:$COMMIT_SHA']
+    args: ['push', 'us-central1-docker.pkg.dev/sharing-session-421916/sharing-session-ar/model:$COMMIT_SHA']
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
     args:
@@ -10,9 +10,9 @@ steps:
       - deploy
       - 'api-model'
       - '--image'
-      - 'asia-southeast2-docker.pkg.dev/sharing-session-421916/sharing-session-ar/model:$COMMIT_SHA'
+      - 'us-central1-docker.pkg.dev/sharing-session-421916/sharing-session-ar/model:$COMMIT_SHA'
       - '--region'
-      - 'asia-southeast2'
+      - 'us-central1'
       - '--cpu'
       - '2'
       - '--memory'
@@ -20,5 +20,5 @@ steps:
       - '--allow-unauthenticated'
       - '--set-secrets=BUCKET_NAME=bucket_name:latest'
 images:
-  - 'asia-southeast2-docker.pkg.dev/sharing-session-421916/sharing-session-ar/model:$COMMIT_SHA'
+  - 'us-central1-docker.pkg.dev/sharing-session-421916/sharing-session-ar/model:$COMMIT_SHA'
 logsBucket: 'gs://sharing-session-bucket/logs'
